@@ -1,3 +1,6 @@
+<!-- Chart to be run in SNAP gpt -->
+<!-- gpt "C:\path\2_TC_dB.xml" -Pin="C:\path\input.dim" -Pout="C:\path\output.tif" -->
+
 <graph id="Graph">
   <version>1.0</version>
   <node id="Read">
