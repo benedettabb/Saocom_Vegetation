@@ -12,7 +12,6 @@
     # E000N000T1: Equi7grid Tile (E051N015T1, E052N015T1)
 
 
-import numpy as np
 import glob
 import csv
 import pandas as pd 
