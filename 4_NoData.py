@@ -64,7 +64,7 @@ path = r"D:\Data\EOVegetation\Processing\Cal_TF_TC_db_cubic_rename\*.tif"
 filesdir = glob.glob(path, recursive=True)
 
 # Parallel processing
-if __name__ == '__main__':
+if __name__ == '__main__':  # Required in Window
     with concurrent.futures.ProcessPoolExecutor(mp.cpu_count()) as executor:
         futures = [executor.submit(nodata, file) for file in filesdir]
         results = [future.result() for future in concurrent.futures.as_completed(futures)]
