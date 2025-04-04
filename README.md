@@ -5,9 +5,9 @@
 Exported bands: VH, VV, Local Projected Incidence Angle
 
 ### GDAL Processing:
-- Rename files (to add acquisition DateTime, Subswath, Orbit)\
-- Setting of NoData\
-- Reprojection to the Equi7grid\
+- Rename files (to add acquisition DateTime, Subswath, Orbit)
+- Setting of NoData
+- Reprojection to the Equi7grid
 - Layover and shadow mask
 
 
