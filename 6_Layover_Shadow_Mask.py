@@ -1,28 +1,20 @@
+# This is to compute a layover and shadow mask for each scene.
+# Slope rasters in degrees are needed, at the same resolution of the data, and into Equi7grid T01 tiles
+# Naming of the slope rasters i.e. slope_equi7_10m_2018_E048N015T1.tif
+
+# Layover:
+    # Slope > Local Projected Incidence Angle
+# Shadow:
+    # Slope > (90-Local Projected Incidence Angle)
+
+
 import glob 
 from osgeo import gdal 
 import numpy as np
 import os 
 from pathlib import Path 
-
-#########################################################################################################################
-
-# Salva in memoria un resampling del DEM adattato alla risoluzione e estensione dell'immagine SAR
-def resample_dem(dem_path, target_ds):
-    dem_ds = gdal.Open(dem_path)
-    geo_transform = target_ds.GetGeoTransform()
-    x_min = geo_transform[0]
-    x_max = x_min + geo_transform[1] * target_ds.RasterXSize
-    y_max = geo_transform[3]
-    y_min = y_max + geo_transform[5] * target_ds.RasterYSize
-    resampled_dem = gdal.Warp('', dem_ds, format='MEM', 
-                                 xRes=geo_transform[1], 
-                                 yRes=-geo_transform[5], 
-                                 outputBounds=(x_min, y_max, x_max, y_min),  # Usa i limiti calcolati
-                                 resampleAlg=gdal.GRA_Bilinear)
-    return resampled_dem
-
-#######################################################################################################################
-
+import multiprocessing as mp 
+import concurrent.futures 
 
 # Crea una mascher per layover e shadow sulla base della slope e del projected local incidence angle
 def mask_layover_shadow(d, dem_dirs):
@@ -43,9 +35,8 @@ def mask_layover_shadow(d, dem_dirs):
         dem_ds = gdal.Open(dem)
         slope = dem_ds.GetRasterBand(1).ReadAsArray()
 
-        print(lpia.shape, slope.shape)
+        print(lpia.shape, slope.shape) # Make sure they have the same shape
         
-    
         # Mask for layover and shadow
         layover_mask = np.where(slope>lpia, 1, np.nan) 
         shadow_mask = np.where(slope>(90-lpia), 2, np.nan)
@@ -73,8 +64,13 @@ def mask_layover_shadow(d, dem_dirs):
         outband=None
         outds=None
 
-
+# Files
 dirs = glob.glob(r"D:\Data\EOVegetation\Processing\Cal_TF_TC_df_cubic_rename_noData_equi7\*.tif")
 dem_dirs = r"D:\Data\EOVegetation\Utils\slope_equi7_10m\*tif"
-[mask_layover_shadow(d, dem_dirs) for d in dirs]
 
+# Parallel processing
+if __name__ == '__main__':     # Required in Window
+    with concurrent.futures.ProcessPoolExecutor(mp.cpu_count()) as executor:
+        futures = [executor.submit(mask_layover_shadow, d, dem_dirs) for d in dirs]
+        results = [future.result() for future in concurrent.futures.as_completed(futures)]
+        
