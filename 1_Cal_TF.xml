@@ -1,5 +1,5 @@
 <!-- Chart to be run in SNAP gpt -->
-<!-- gpt "C:\path\1_Cal_TF.xml" -Pin="C:\path\input.dim" -Pout="C:\path\output.dim" -->
+<!-- gpt "C:\path\1_Cal_TF.xml" -Pin="C:\path\input.xemt" -Pout="C:\path\output.dim" -->
 
 <graph id="Graph">
   <version>1.0</version>
