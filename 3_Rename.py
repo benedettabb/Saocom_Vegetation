@@ -1,3 +1,16 @@
+# This is to add the acquisition DateTime, submode and orbit to the SAOCOM file name. Final name:
+
+# S1M_OPER_SAR_EOSSP__CORE_L1A_GEO_YYYYMMDDTHHMMSS_20240107T044127_SSPP_OOO_E000N000T1
+    # S1M: Mission Identifier (S1A, S1B)
+    # LPP: Processing level (L1A, L1B, L1C, L1D)
+    # GGG: Geolocation Processing (Online Very Fast – OVF, OLVF) 
+    # YYYYMMDDTHHMMSS: Ingestion date and time
+    # YYYYMMDDTHHMMSS: Acquisition date and time
+    # SS: Subswath (S3, S4, S5)
+    # PP: Polarization (DP)
+    # OOO: Orbit (ASC, DESC)
+    # E000N000T1: Equi7grid Tile (E051N015T1, E052N015T1)
+
 
 import numpy as np
 import glob
@@ -6,6 +19,7 @@ import pandas as pd
 import os 
 from pathlib import Path
 
+# Properties file created in step 0
 properties = r"D:\Data\EOVegetation\Utils\info\Saocom_scenes.csv"
 names=list()
 start_times=list()
