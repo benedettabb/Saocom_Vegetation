@@ -1,6 +1,7 @@
 <!-- Chart to be run in SNAP gpt -->
 <!-- gpt "C:\path\1_Cal_TF.xml" -Pin="C:\path\input.xemt" -Pout="C:\path\output.dim" -->
 
+
 <graph id="Graph">
   <version>1.0</version>
   <node id="Read">
@@ -11,22 +12,41 @@
       <file>${in}</file>
       <copyMetadata>true</copyMetadata>
       <bandNames/>
-      <pixelRegion>0,0,9122,31632</pixelRegion>
+      <pixelRegion>0,0,7834,23392</pixelRegion>
       <maskNames/>
+    </parameters>
+  </node>
+  <node id="Calibration">
+    <operator>Calibration</operator>
+    <sources>
+      <sourceProduct refid="Read"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands>Intensity_VH,Intensity_VV</sourceBands>
+      <auxFile>Latest Auxiliary File</auxFile>
+      <externalAuxFile/>
+      <outputImageInComplex>false</outputImageInComplex>
+      <outputImageScaleInDb>false</outputImageScaleInDb>
+      <createGammaBand>false</createGammaBand>
+      <createBetaBand>true</createBetaBand>
+      <selectedPolarisations/>
+      <outputSigmaBand>true</outputSigmaBand>
+      <outputGammaBand>false</outputGammaBand>
+      <outputBetaBand>false</outputBetaBand>
     </parameters>
   </node>
   <node id="Terrain-Flattening">
     <operator>Terrain-Flattening</operator>
     <sources>
-      <sourceProduct refid="Read"/>
+      <sourceProduct refid="Calibration"/>
     </sources>
     <parameters class="com.bc.ceres.binding.dom.XppDomElement">
       <sourceBands>Beta0_VH,Beta0_VV</sourceBands>
       <demName>External DEM</demName>
       <demResamplingMethod>NEAREST_NEIGHBOUR</demResamplingMethod>
-      <externalDEMFile>D:\Data\EOVegetation\Utils\dtm_10m.tif</externalDEMFile>
+      <externalDEMFile>D:\Data\EOVegetation\Utils\dhm_at_lamb_10m_2018_wgs84_cubic.tif</externalDEMFile>
       <externalDEMNoDataValue>-3.40282E38</externalDEMNoDataValue>
-      <externalDEMApplyEGM>true</externalDEMApplyEGM>
+      <externalDEMApplyEGM>false</externalDEMApplyEGM>
       <outputSimulatedImage>false</outputSimulatedImage>
       <outputSigma0>false</outputSigma0>
       <nodataValueAtSea>false</nodataValueAtSea>
@@ -47,13 +67,16 @@
   <applicationData id="Presentation">
     <Description/>
     <node id="Read">
-            <displayPosition x="37.0" y="134.0"/>
+      <displayPosition x="74.0" y="134.0"/>
+    </node>
+    <node id="Calibration">
+      <displayPosition x="206.0" y="139.0"/>
     </node>
     <node id="Terrain-Flattening">
-      <displayPosition x="215.0" y="132.0"/>
+      <displayPosition x="361.0" y="165.0"/>
     </node>
     <node id="Write">
-            <displayPosition x="455.0" y="135.0"/>
+      <displayPosition x="604.0" y="205.0"/>
     </node>
   </applicationData>
 </graph>
