@@ -1,4 +1,4 @@
-# This is to compute a layover and shadow mask for each scene.
+# This is to add a layover and shadow mask band to each scene.
 # Slope rasters in degrees are needed, at the same resolution of the data, and into Equi7grid T01 tiles
 # Naming of the slope rasters i.e. slope_equi7_10m_2018_E048N015T1.tif
 
