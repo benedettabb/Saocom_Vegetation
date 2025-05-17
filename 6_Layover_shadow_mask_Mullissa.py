@@ -53,7 +53,6 @@ def main (dirs_backscatter, dirs_ia, dirs_slope, dirs_aspect, tile, name):
         vv = ds_bs.GetRasterBand(1).ReadAsArray()
         vh = ds_bs.GetRasterBand(2).ReadAsArray()
         lpia = ds_bs.GetRasterBand(3).ReadAsArray()
-        lpia_mask_old = ds_bs.GetRasterBand(4).ReadAsArray()
 
 
         # Radar angles
@@ -110,7 +109,7 @@ def main (dirs_backscatter, dirs_ia, dirs_slope, dirs_aspect, tile, name):
         outband=outds.GetRasterBand(3)
         outband.WriteArray(lpia)
         outband.SetNoDataValue(-9999)
-        # MASK 2   
+        # MASK
         outband=outds.GetRasterBand(4)
         outband.WriteArray(lpia_mask)
         outband.SetNoDataValue(-9999)
@@ -125,18 +124,14 @@ def main (dirs_backscatter, dirs_ia, dirs_slope, dirs_aspect, tile, name):
 
 
 
-
-
-
-
-
-
+# directories
 dirs_ia = glob.glob(r"D:\EOVeg\ellipsoid_incidence_angle\incidence_angle_equi7\ia\**\*tif")
 dirs_backscatter = glob.glob(r"D:\EOVeg\Data_final\*tif")
 dirs_slope = glob.glob(r"D:\EOVeg\ellipsoid_incidence_angle\incidence_angle_equi7\DEM\slope*.tif")
 dirs_aspect = glob.glob(r"D:\EOVeg\ellipsoid_incidence_angle\incidence_angle_equi7\DEM\aspect*.tif")
 names = [Path(d).stem for d in dirs_backscatter]
 
+# Equi7grid tiles
 tiles = ["E048N017T1", "E049N017T1", "E050N017T1", "E051N017T1", "E052N017T1", "E053N017T1",
         "E048N016T1", "E049N016T1", "E050N016T1", "E051N016T1", "E052N016T1", "E053N016T1",
         "E048N015T1", "E049N015T1", "E050N015T1", "E051N015T1", "E052N015T1", "E053N015T1",
