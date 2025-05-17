@@ -6,7 +6,6 @@ import glob
 from osgeo import gdal 
 from pathlib import Path 
 import os 
-# import matplotlib.pyplot as plt
 
 def get_tile (dirs, tile):
     outdir = list()
