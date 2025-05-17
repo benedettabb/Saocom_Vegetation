@@ -57,9 +57,9 @@ def main (dirs_backscatter, dirs_ia, dirs_slope, dirs_aspect, tile, name):
         # Radar angles
         thetai = ds_ia.GetRasterBand(1).ReadAsArray()
         if "ASC" in name:
-            phii_rad = np.deg2rad(100) # change with real aspect
+            phii_rad = np.deg2rad(250) # SNAP center_heading (1)-90
         elif "DES" in name:
-            phii_rad = np.deg2rad(100)
+            phii_rad = np.deg2rad(100) # SNAP center_heading (1)-90
 
 
         # Terrain angles
